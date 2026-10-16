@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>경제연구소</title>
+  <title>긴급대책회의</title>
   <style>
     :root {
       --bg: #f2f2f7;
@@ -206,16 +206,16 @@
 
 <div id="lockScreen" class="lock-screen">
   <div class="lock-card">
-    <div style="font-size: 17px; font-weight: 700; margin-bottom: 8px;">멤버 전용 공간입니다</div>
+    <div style="font-size: 17px; font-weight: 700; margin-bottom: 8px;">긴급대책회의 전용 공간</div>
     <div style="font-size: 13px; color: var(--text-sub); line-height: 1.6;">
-      채팅방 공지에 등록된<br><b>전용 초대 링크</b>를 통해 접속해 주세요.
+      초대 링크를 통해 접속해 주세요.
     </div>
   </div>
 </div>
 
 <div id="loginScreen" class="login-screen">
   <div class="login-card">
-    <div style="font-size: 19px; font-weight: 700; margin-bottom: 4px;">경제연구소</div>
+    <div style="font-size: 19px; font-weight: 700; margin-bottom: 4px;">긴급대책회의</div>
     <div style="font-size: 13px; color: var(--text-sub);">본인의 프로필을 선택하고 비밀번호를 입력하세요.</div>
     
     <div id="profileGrid" class="profile-grid"></div>
@@ -230,7 +230,7 @@
 <div id="mainApp" class="app">
   <header class="header">
     <div class="header-top">
-      <div class="header-title">경제연구소</div>
+      <div class="header-title">긴급대책회의</div>
       <div class="header-actions">
         <button id="adminBtn" class="badge-btn admin" onclick="openAdminModal()" style="display:none;">관리</button>
         <button id="userBadge" class="badge-btn" onclick="openMyAccountModal()">계정</button>
@@ -245,13 +245,11 @@
   </header>
 
   <main class="content">
-    <!-- 홈 탭 -->
     <section id="page-home" class="page active">
       <div class="hero-banner">
-        <img src="banner.png" alt="경제연구소 세미나" onerror="this.parentElement.style.display='none';">
+        <img src="banner.png" alt="긴급대책회의" onerror="this.parentElement.style.display='none';">
       </div>
 
-      <!-- 공지사항 카드 (한 칸으로 통합) -->
       <div class="card">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
           <div class="card-title" style="margin-bottom: 0;">공지사항</div>
@@ -266,7 +264,6 @@
       </div>
     </section>
 
-    <!-- 일정 탭 -->
     <section id="page-schedule" class="page">
       <div class="card">
         <div class="card-title">새 일정 등록</div>
@@ -280,7 +277,6 @@
       <div id="scheduleList"></div>
     </section>
 
-    <!-- 정산 탭 -->
     <section id="page-settlement" class="page">
       <div class="calc-container">
         <div style="font-size:15px; font-weight:700; margin-bottom:8px;">N빵 계산기</div>
@@ -299,7 +295,7 @@
           <input id="settlementDate" type="date" class="input" style="flex:1;">
           <input id="settlementPayer" placeholder="결제자 (기본: 본인)" class="input" style="flex:1;">
         </div>
-        <input id="settlementContent" placeholder="지출 내용 (예: 1차 회식)" class="input" style="margin-bottom:8px;">
+        <input id="settlementContent" placeholder="지출 내용 (예: 회의 다과)" class="input" style="margin-bottom:8px;">
         <input id="settlementAmount" type="number" placeholder="금액 (원)" class="input" style="margin-bottom:8px;">
         <input id="settlementNote" placeholder="비고 (선택사항)" class="input" style="margin-bottom:8px;">
         <button class="btn-main" onclick="addSettlement()">지출 저장</button>
@@ -307,7 +303,6 @@
       <div id="settlementList"></div>
     </section>
 
-    <!-- 메모 탭 -->
     <section id="page-memo" class="page">
       <div class="card">
         <div class="card-title">공유 메모</div>
@@ -320,7 +315,6 @@
   </main>
 </div>
 
-<!-- 공지 등록 모달 -->
 <div id="noticeModal" class="modal">
   <div class="sheet">
     <div class="sheet-title">새 공지 등록</div>
@@ -333,7 +327,6 @@
   </div>
 </div>
 
-<!-- 내 계정 모달 -->
 <div id="myAccountModal" class="modal">
   <div class="sheet">
     <div class="sheet-title">내 계정 (<span id="myAccountName"></span>)</div>
@@ -351,7 +344,6 @@
   </div>
 </div>
 
-<!-- 관리자 모달 -->
 <div id="adminModal" class="modal">
   <div class="sheet">
     <div class="sheet-title">관리자 설정 (S 전용)</div>
@@ -383,7 +375,6 @@
   </div>
 </div>
 
-<!-- 내역 수정 모달 -->
 <div id="editModal" class="modal">
   <div class="sheet">
     <div class="sheet-title">내역 수정</div>
@@ -396,19 +387,20 @@
 </div>
 
 <script>
-  const API_URL = "https://economy.insightview.workers.dev";
+  // ★ 여기에 본인의 새 emergency-worker URL을 입력하세요 ★
+  const API_URL = "https://emergency-worker.아이디.workers.dev";
   const ADMIN_ID = "S";
 
   const urlParams = new URLSearchParams(window.location.search);
   const urlKey = urlParams.get('key');
   if (urlKey) {
-    localStorage.setItem('app_secret_key', urlKey.trim());
+    localStorage.setItem('emergency_secret_key', urlKey.trim());
     window.history.replaceState({}, document.title, window.location.pathname);
   }
 
-  let secretKey = localStorage.getItem('app_secret_key') || '';
-  let userName = localStorage.getItem('app_username') || '';
-  let userPassword = localStorage.getItem('app_password') || '';
+  let secretKey = localStorage.getItem('emergency_secret_key') || '';
+  let userName = localStorage.getItem('emergency_username') || '';
+  let userPassword = localStorage.getItem('emergency_password') || '';
 
   let selectedProfile = '';
   let publicMembers = [];
@@ -429,7 +421,7 @@
       });
       const data = await res.json();
       if (!data.ok) {
-        localStorage.removeItem('app_secret_key');
+        localStorage.removeItem('emergency_secret_key');
         document.getElementById("lockScreen").classList.add("show");
         return;
       }
@@ -507,8 +499,8 @@
 
       userName = selectedProfile;
       userPassword = pw;
-      localStorage.setItem('app_username', userName);
-      localStorage.setItem('app_password', userPassword);
+      localStorage.setItem('emergency_username', userName);
+      localStorage.setItem('emergency_password', userPassword);
 
       document.getElementById("loginScreen").classList.remove("show");
       enterMainApp();
@@ -539,15 +531,17 @@
     try {
       const res = await api('changeMyPassword', { newPassword });
       userPassword = res.newPassword;
-      localStorage.setItem('app_password', userPassword);
+      localStorage.setItem('emergency_password', userPassword);
       alert("비밀번호가 변경되었습니다.");
       closeMyAccountModal();
-    } finally { showLoading(false); }
+    } finally {
+      showLoading(false);
+    }
   }
 
   async function logoutUser() {
-    localStorage.removeItem('app_username');
-    localStorage.removeItem('app_password');
+    localStorage.removeItem('emergency_username');
+    localStorage.removeItem('emergency_password');
     userName = '';
     userPassword = '';
     closeMyAccountModal();
@@ -580,7 +574,7 @@
     if (!data.ok) {
       alert(data.error || "오류가 발생했습니다.");
       if (res.status === 401) {
-        localStorage.removeItem('app_secret_key');
+        localStorage.removeItem('emergency_secret_key');
         location.reload();
       } else if (data.authFailed) {
         logoutUser();
@@ -714,7 +708,7 @@
       await api('adminResetMemberPassword', { targetName, newPassword: newPassword.trim() });
       if (targetName === userName) {
         userPassword = newPassword.trim();
-        localStorage.setItem('app_password', userPassword);
+        localStorage.setItem('emergency_password', userPassword);
       }
       await loadAdminMembers();
     } finally { showLoading(false); }
@@ -738,7 +732,7 @@
     try {
       await api('updateSettings', { newSecretKey: newKey });
       secretKey = newKey;
-      localStorage.setItem('app_secret_key', newKey);
+      localStorage.setItem('emergency_secret_key', newKey);
       const fullLink = `${window.location.origin}${window.location.pathname}?key=${newKey}`;
       document.getElementById("newSecretLinkResult").innerHTML = `변경 완료! 새 공지 링크:<br><a href="${fullLink}" target="_blank">${fullLink}</a>`;
     } finally { showLoading(false); }
